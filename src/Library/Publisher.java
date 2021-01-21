@@ -21,17 +21,17 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Karan
  */
-public class Category extends javax.swing.JFrame {
+public class Publisher extends javax.swing.JFrame {
 
     private Object JoptionPane;
 
     /**
      * Creates new form Category
      */
-    public Category() {
+    public Publisher() {
         initComponents();
         Connect();
-        Category_Load();
+        Publisher_Load();
     }
     
     
@@ -45,18 +45,18 @@ public class Category extends javax.swing.JFrame {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/Library", "root", "");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Publisher.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Publisher.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
     
-    public void Category_Load()
+    public void Publisher_Load()
     {
         int c;
         try {
-            pst = con.prepareStatement("select * from Category");
+            pst = con.prepareStatement("select * from publisher");
             rs = pst.executeQuery();
        ResultSetMetaData rsd = rs.getMetaData();
        c = rsd.getColumnCount();
@@ -70,8 +70,9 @@ public class Category extends javax.swing.JFrame {
             for(int i=1; i<=c; i++)
             {
                 v2.add(rs.getString("id"));
-                v2.add(rs.getString("catname"));
-                v2.add(rs.getString("status"));
+                v2.add(rs.getString("name"));
+                v2.add(rs.getString("address"));
+                v2.add(rs.getString("mobile"));
             }
             d.addRow(v2);
        }
@@ -79,7 +80,7 @@ public class Category extends javax.swing.JFrame {
                
                
         } catch (SQLException ex) {
-            Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Publisher.class.getName()).log(Level.SEVERE, null, ex);
         }
         
        
@@ -101,38 +102,34 @@ public class Category extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtcategory = new javax.swing.JTextField();
-        txtstatus = new javax.swing.JComboBox<>();
+        txtname = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtaddress = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        txtmobile = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Category");
+        jLabel1.setText("Publisher");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Category Name");
+        jLabel2.setText("Publisher Name");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Status");
+        jLabel3.setText("Mobile No.");
 
-        txtcategory.addActionListener(new java.awt.event.ActionListener() {
+        txtname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtcategoryActionPerformed(evt);
-            }
-        });
-
-        txtstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Deactive" }));
-        txtstatus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtstatusActionPerformed(evt);
+                txtnameActionPerformed(evt);
             }
         });
 
@@ -173,7 +170,7 @@ public class Category extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Category Name", "Status"
+                "ID", "Publisher Name", "Address", "Mobile No."
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -183,12 +180,22 @@ public class Category extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        txtaddress.setColumns(20);
+        txtaddress.setRows(5);
+        jScrollPane2.setViewportView(txtaddress);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("Address");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -200,23 +207,25 @@ public class Category extends javax.swing.JFrame {
                                 .addGap(78, 78, 78)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtcategory)
-                                .addComponent(txtstatus, 0, 141, Short.MAX_VALUE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(82, 82, 82)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2)
+                            .addComponent(txtmobile)
+                            .addComponent(txtname))))
+                .addGap(80, 80, 80)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(75, 75, 75)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(539, Short.MAX_VALUE)))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(75, 75, 75)
+                    .addComponent(jLabel4)
+                    .addContainerGap(843, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,12 +237,18 @@ public class Category extends javax.swing.JFrame {
                         .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtcategory, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addGap(46, 46, 46))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(txtmobile, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -248,6 +263,11 @@ public class Category extends javax.swing.JFrame {
                     .addContainerGap(352, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(120, 120, 120)))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(232, 232, 232)
+                    .addComponent(jLabel4)
+                    .addContainerGap(310, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -257,7 +277,7 @@ public class Category extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(339, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,45 +291,47 @@ public class Category extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtcategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcategoryActionPerformed
+    private void txtnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtcategoryActionPerformed
+    }//GEN-LAST:event_txtnameActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         
-        String category = txtcategory.getText();
-        String status = txtstatus.getSelectedItem().toString();
+        String name = txtname.getText();
+        String address = txtaddress.getText();
+        String mobile = txtmobile.getText();
         
         try {
-            pst = con.prepareStatement("insert into Category(catname, status) values (?,?)");
-            pst.setString(1, category);
-            pst.setString(2, status);
+            pst = con.prepareStatement("insert into publisher(name, address, mobile) values (?,?,?)");
+            pst.setString(1, name);
+            pst.setString(2, address);
+            pst.setString(3, mobile);
+            
         int k = pst.executeUpdate();
         
         if(k==1){
-            JOptionPane.showMessageDialog(this, "Category Created");
+            JOptionPane.showMessageDialog(this, "Publisher Created");
             
-            txtcategory.setText("");
-            txtstatus.setSelectedIndex(-1);
-            txtcategory.requestFocus();
-            Category_Load();
+            txtname.setText("");
+            txtaddress.setText("");
+            txtmobile.setText("");
+            txtname.requestFocus();
+            Publisher_Load();
+            
+            
         }
         else{
             JOptionPane.showMessageDialog(this, "Error");
         }
                 
         } catch (SQLException ex) {
-            Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Publisher.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void txtstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtstatusActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
@@ -317,9 +339,11 @@ public class Category extends javax.swing.JFrame {
       DefaultTableModel d1 = (DefaultTableModel)jTable1.getModel();
       int selectIndex = jTable1.getSelectedRow();
       
+      
       int id = Integer.parseInt(d1.getValueAt(selectIndex, 0).toString());
-      txtcategory.setText(d1.getValueAt(selectIndex, 1).toString());
-      txtstatus.setSelectedItem(d1.getValueAt(selectIndex, 2).toString());
+      txtname.setText(d1.getValueAt(selectIndex, 1).toString());
+      txtaddress.setText(d1.getValueAt(selectIndex, 2).toString());
+      txtmobile.setText(d1.getValueAt(selectIndex, 3).toString());
       
       jButton2.setEnabled(false);
       
@@ -332,34 +356,42 @@ public class Category extends javax.swing.JFrame {
         DefaultTableModel d1 = (DefaultTableModel)jTable1.getModel();
       int selectIndex = jTable1.getSelectedRow();
       
+      
       int id = Integer.parseInt(d1.getValueAt(selectIndex, 0).toString());
         
-       String category = txtcategory.getText();
-        String status = txtstatus.getSelectedItem().toString();
+        String name = txtname.getText();
+        String address = txtaddress.getText();
+        String mobile = txtmobile.getText();
         
         try {
-            pst = con.prepareStatement("update Category set catname = ?, status =? where id = ?");
-            pst.setString(1, category);
-            pst.setString(2, status);
-            pst.setInt(3, id); 
+            pst = con.prepareStatement("update publisher set name = ?, address = ?, mobile = ? where id = ?");
+            pst.setString(1, name);
+            pst.setString(2, address);
+            pst.setString(3, mobile);
+            pst.setInt(4, id);
+            
         int k = pst.executeUpdate();
         
         if(k==1){
-            JOptionPane.showMessageDialog(this, "Category Updated");
+            JOptionPane.showMessageDialog(this, "Publisher Updated");
             
-            txtcategory.setText("");
-            txtstatus.setSelectedIndex(-1);
-            txtcategory.requestFocus();
-            Category_Load();
-                    jButton2.setEnabled(true);
+            txtname.setText("");
+            txtaddress.setText("");
+            txtmobile.setText("");
+            txtname.requestFocus();
+            jButton2.setEnabled(true);
+            
+            Publisher_Load();
+            
+            
         }
         else{
             JOptionPane.showMessageDialog(this, "Error");
         }
                 
         } catch (SQLException ex) {
-            Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            Logger.getLogger(Publisher.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -368,33 +400,38 @@ public class Category extends javax.swing.JFrame {
         DefaultTableModel d1 = (DefaultTableModel)jTable1.getModel();
       int selectIndex = jTable1.getSelectedRow();
       
+      
       int id = Integer.parseInt(d1.getValueAt(selectIndex, 0).toString());
         
-       String category = txtcategory.getText();
-        String status = txtstatus.getSelectedItem().toString();
+        
         
         try {
-            pst = con.prepareStatement("delete from Category where id = ?");
-          
-            pst.setInt(1, id); 
+            pst = con.prepareStatement("delete from publisher where id = ? ");
+            
+            pst.setInt(1, id);
+            
         int k = pst.executeUpdate();
         
         if(k==1){
-            JOptionPane.showMessageDialog(this, "Category Deleted");
+            JOptionPane.showMessageDialog(this, "Publisher Deleted");
             
-            txtcategory.setText("");
-            txtstatus.setSelectedIndex(-1);
-            txtcategory.requestFocus();
-            Category_Load();
-                    jButton2.setEnabled(true);
+            txtname.setText("");
+            txtaddress.setText("");
+            txtmobile.setText("");
+            txtname.requestFocus();
+            jButton2.setEnabled(true);
+            
+            Publisher_Load();
+            
+            
         }
         else{
             JOptionPane.showMessageDialog(this, "Error");
         }
                 
         } catch (SQLException ex) {
-            Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            Logger.getLogger(Publisher.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -421,20 +458,23 @@ public class Category extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Category.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Publisher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Category.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Publisher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Category.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Publisher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Category.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Publisher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Category().setVisible(true);
+                new Publisher().setVisible(true);
             }
         });
     }
@@ -447,10 +487,13 @@ public class Category extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtcategory;
-    private javax.swing.JComboBox<String> txtstatus;
+    private javax.swing.JTextArea txtaddress;
+    private javax.swing.JTextField txtmobile;
+    private javax.swing.JTextField txtname;
     // End of variables declaration//GEN-END:variables
 }
